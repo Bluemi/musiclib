@@ -4,7 +4,7 @@ use std::fmt;
 
 use crate::intervals::Interval;
 
-#[derive(PartialEq, Debug, Clone, Copy)]
+#[derive(PartialEq, Eq, Hash, Debug, Clone, Copy)]
 pub enum Key { A, Ais, B, C, Cis, D, Dis, E, F, Fis, G, Gis, }
 
 impl Add<Interval> for Key {

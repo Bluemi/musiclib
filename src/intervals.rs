@@ -1,17 +1,17 @@
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Interval {
 	Prime,
-	LSecond,
-	BSecond,
-	LThird,
-	BThird,
+	MinorSecond,
+	MajorSecond,
+	MinorThird,
+	MajorThird,
 	Fourth,
 	Tritone,
 	Fifth,
-	LSixth,
-	BSixth,
-	LSeventh,
-	BSeventh,
+	MinorSixth,
+	MajorSixth,
+	MinorSeventh,
+	MajorSeventh,
 	Octave,
 }
 
@@ -19,17 +19,17 @@ impl Interval {
 	pub fn halftones(self) -> u32 {
 		match self {
 			Interval::Prime => 0,
-			Interval::LSecond => 1,
-			Interval::BSecond => 2,
-			Interval::LThird => 3,
-			Interval::BThird => 4,
+			Interval::MinorSecond => 1,
+			Interval::MajorSecond => 2,
+			Interval::MinorThird => 3,
+			Interval::MajorThird => 4,
 			Interval::Fourth => 5,
 			Interval::Tritone => 6,
 			Interval::Fifth => 7,
-			Interval::LSixth => 8,
-			Interval::BSixth => 9,
-			Interval::LSeventh => 10,
-			Interval::BSeventh => 11,
+			Interval::MinorSixth => 8,
+			Interval::MajorSixth => 9,
+			Interval::MinorSeventh => 10,
+			Interval::MajorSeventh => 11,
 			Interval::Octave => 12,
 		}
 	}
