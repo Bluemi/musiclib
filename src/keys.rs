@@ -86,3 +86,22 @@ impl fmt::Display for Key {
 		}
 	}
 }
+
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	pub fn key_add_interval() {
+		assert_eq!(Key::B, Key::A + Interval::MajorSecond);
+		assert_eq!(Key::C, Key::A + Interval::Octave + Interval::MinorThird);
+		assert_eq!(Key::F, Key::Cis + Interval::MajorThird);
+	}
+
+	#[test]
+	pub fn key_sub_interval() {
+		assert_eq!(Key::G, Key::A - Interval::MajorSecond);
+		assert_eq!(Key::Fis, Key::A - Interval::Octave - Interval::MinorThird);
+	}
+}
