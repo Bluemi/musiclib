@@ -2,6 +2,7 @@ use std::collections::HashSet;
 
 use crate::keys::Key;
 use crate::intervals::Interval;
+use crate::pitch::{Pitch, Octave, PitchRange};
 
 /*
  * Represents a set of Intervals, which relative to a keynote build a chord.
@@ -12,6 +13,10 @@ pub struct ChordTemplate {
 
 pub struct Chord {
 	pub keys: HashSet<Key>,
+}
+
+pub struct PitchChord {
+	pub pitches: HashSet<Pitch>,
 }
 
 impl ChordTemplate {
@@ -40,6 +45,22 @@ impl Chord {
 	pub fn from_chord_template(chord_template: &ChordTemplate, keynote: Key) -> Chord {
 		let keys = chord_template.intervals.iter().map(|interval| keynote + *interval).collect();
 		Chord { keys }
+	}
+}
+
+impl PitchChord {
+	pub fn from_chord_and_octave(chord: &Chord, octave: Octave) -> PitchChord {
+		let pitches = chord.keys.iter().map(|key| Pitch::from_key_and_octave(*key, octave)).collect();
+		PitchChord { pitches }
+	}
+
+	pub fn from_chord_and_pitch_range(chord: Chord, pitch_range: PitchRange) -> PitchChord {
+		let mut pitches = Vec::new();
+		for key in chord.keys {
+			let mut vec = pitch_range.inner_pitches(key);
+			pitches.append(&mut vec);
+		}
+		PitchChord { pitches: pitches.iter().cloned().collect() }
 	}
 }
 
@@ -79,5 +100,21 @@ mod tests {
 		assert!(minor_cis_chord.keys.contains(&Key::E));
 		assert!(minor_cis_chord.keys.contains(&Key::Gis));
 		assert_eq!(minor_cis_chord.keys.len(), 3);
+	}
+
+	#[test]
+	pub fn pitch_chord_from_chord_and_pitch_range() {
+		let pitch_range = PitchRange { lower: Pitch { value: 24 }, upper: Pitch { value: 42 }};
+		let chord = Chord::from_chord_template(&ChordTemplate::major(), Key::A);
+		let pitch_chord = PitchChord::from_chord_and_pitch_range(chord, pitch_range);
+		let mut asserted_pitches = HashSet::new();
+		asserted_pitches.insert(Pitch { value: 24 });
+		asserted_pitches.insert(Pitch { value: 28 });
+		asserted_pitches.insert(Pitch { value: 31 });
+		asserted_pitches.insert(Pitch { value: 36 });
+		asserted_pitches.insert(Pitch { value: 40 });
+
+		assert_eq!(pitch_chord.pitches, asserted_pitches);
+		assert_eq!(pitch_chord.pitches.len(), 5);
 	}
 }

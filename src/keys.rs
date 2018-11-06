@@ -3,9 +3,22 @@ use std::convert::From;
 use std::fmt;
 
 use crate::intervals::Interval;
+use crate::pitch::Pitch;
+use crate::math::neg_modulo;
+
+const NUM_HALF_TONES: u32 = 12;
 
 #[derive(PartialEq, Eq, Hash, Debug, Clone, Copy)]
 pub enum Key { A, Ais, B, C, Cis, D, Dis, E, F, Fis, G, Gis, }
+
+impl Key {
+	pub fn to_interval(lower_key: Key, upper_key: Key) -> Interval {
+		let lower: u32 = lower_key.into();
+		let upper: u32 = upper_key.into();
+
+		((upper+12-lower)%12).into()
+	}
+}
 
 impl Add<Interval> for Key {
 	type Output = Key;
@@ -25,7 +38,13 @@ impl Sub<Interval> for Key {
 		let number: u32 = self.into();
 		let halftones = interval.halftones();
 
-		((number+12) - halftones).into()
+		((number+NUM_HALF_TONES) - halftones).into()
+	}
+}
+
+impl From<Pitch> for Key {
+	fn from(pitch: Pitch) -> Key {
+		neg_modulo(pitch.value, NUM_HALF_TONES).into()
 	}
 }
 
@@ -50,7 +69,7 @@ impl From<Key> for u32 {
 
 impl From<u32> for Key {
 	fn from(number: u32) -> Key {
-		match number%12 {
+		match number%NUM_HALF_TONES {
 			0 => Key::A,
 			1 => Key::Ais,
 			2 => Key::B,
@@ -63,7 +82,7 @@ impl From<u32> for Key {
 			9 => Key::Fis,
 			10 => Key::G,
 			11 => Key::Gis,
-			_ => panic!("number % 12 is >= 12"),
+			_ => panic!("number % {0} is >= {0}", NUM_HALF_TONES),
 		}
 	}
 }
@@ -71,18 +90,18 @@ impl From<u32> for Key {
 impl fmt::Display for Key {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		match self {
-			Key::A => write!(f, "A Key"),
-			Key::Ais => write!(f, "Ais Key"),
-			Key::B => write!(f, "B Key"),
-			Key::C => write!(f, "C Key"),
-			Key::Cis => write!(f, "Cis Key"),
-			Key::D => write!(f, "D Key"),
-			Key::Dis => write!(f, "Dis Key"),
-			Key::E => write!(f, "E Key"),
-			Key::F => write!(f, "F Key"),
-			Key::Fis => write!(f, "Fis Key"),
-			Key::G => write!(f, "G Key"),
-			Key::Gis => write!(f, "Gis Key"),
+			Key::A => write!(f, "Key A"),
+			Key::Ais => write!(f, "Key Ais"),
+			Key::B => write!(f, "Key B"),
+			Key::C => write!(f, "Key C"),
+			Key::Cis => write!(f, "Key Cis"),
+			Key::D => write!(f, "Key D"),
+			Key::Dis => write!(f, "Key Dis"),
+			Key::E => write!(f, "Key E"),
+			Key::F => write!(f, "Key F"),
+			Key::Fis => write!(f, "Key Fis"),
+			Key::G => write!(f, "Key G"),
+			Key::Gis => write!(f, "Key Gis"),
 		}
 	}
 }
@@ -103,5 +122,11 @@ mod tests {
 	pub fn key_sub_interval() {
 		assert_eq!(Key::G, Key::A - Interval::MajorSecond);
 		assert_eq!(Key::Fis, Key::A - Interval::Octave - Interval::MinorThird);
+	}
+
+	#[test]
+	pub fn from_pitch_to_key() {
+		assert_eq!(Key::F, Key::from(Pitch { value: -4 }));
+		assert_eq!(Key::B, Key::from(Pitch { value: 2 }));
 	}
 }
