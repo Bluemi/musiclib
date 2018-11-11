@@ -28,8 +28,7 @@ pub struct PitchRange {
 
 impl Pitch {
 	pub fn from_key_and_octave(key: Key, octave: Octave) -> Pitch {
-		let key_value: u32 = key.into();
-		Pitch { value: (octave.value * 12 + (key_value as i32)) }
+		Pitch { value: (octave.value * 12 + (key.get_value() as i32)) }
 	}
 
 	pub fn to_midi_number(&self) -> Option<u32> {
@@ -60,7 +59,7 @@ impl Add<Interval> for Pitch {
 	type Output = Pitch;
 
 	fn add(self, interval: Interval) -> Pitch {
-		Pitch { value: self.value + interval.halftones() as i32 }
+		Pitch { value: self.value + interval.halftones }
 	}
 }
 
@@ -68,39 +67,26 @@ impl Sub<Interval> for Pitch {
 	type Output = Pitch;
 
 	fn sub(self, interval: Interval) -> Pitch {
-		Pitch { value: self.value - interval.halftones() as i32 }
+		Pitch { value: self.value - interval.halftones }
 	}
 }
 
 impl AddAssign<Interval> for Pitch {
 	fn add_assign(&mut self, interval: Interval) {
-		self.value += interval.halftones() as i32;
+		self.value += interval.halftones;
 	}
 }
 
 impl SubAssign<Interval> for Pitch {
 	fn sub_assign(&mut self, interval: Interval) {
-		self.value -= interval.halftones() as i32;
+		self.value -= interval.halftones;
 	}
 }
 
 impl fmt::Display for Pitch {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let key = Key::from(*self);
-		match key {
-			Key::A => write!(f, "Pitch A: {}", self.value),
-			Key::Ais => write!(f, "Pitch Ais: {}", self.value),
-			Key::B => write!(f, "Pitch B: {}", self.value),
-			Key::C => write!(f, "Pitch C: {}", self.value),
-			Key::Cis => write!(f, "Pitch Cis: {}", self.value),
-			Key::D => write!(f, "Pitch D: {}", self.value),
-			Key::Dis => write!(f, "Pitch Dis: {}", self.value),
-			Key::E => write!(f, "Pitch E: {}", self.value),
-			Key::F => write!(f, "Pitch F: {}", self.value),
-			Key::Fis => write!(f, "Pitch Fis: {}", self.value),
-			Key::G => write!(f, "Pitch G: {}", self.value),
-			Key::Gis => write!(f, "Pitch Gis: {}", self.value),
-		}
+		key.fmt(f)
 	}
 }
 
@@ -111,7 +97,7 @@ impl PitchRange {
 
 		while pitch < self.upper {
 			pitches.push(pitch);
-			pitch += Interval::Octave;
+			pitch += Interval::octave();
 		}
 
 		pitches

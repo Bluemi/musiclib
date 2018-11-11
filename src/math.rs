@@ -1,10 +1,10 @@
-pub fn neg_modulo(value: i32, divider: u32) -> u32 {
+pub fn neg_modulo(value: i32, divider: u32) -> u32
+{
 	if value < 0 {
 		let multi: u32 = (value.abs() as u32) / divider + 1;
-		println!("multi: {}", multi);
 		((value + (multi * divider) as i32) as u32) % divider
 	} else {
-		(value as u32) % divider
+		((value as u32) % divider)
 	}
 }
 

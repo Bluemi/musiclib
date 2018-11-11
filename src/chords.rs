@@ -26,17 +26,17 @@ impl ChordTemplate {
 
 	pub fn major() -> ChordTemplate {
 		let mut chord_template: ChordTemplate = ChordTemplate::new();
-		chord_template.intervals.insert(Interval::Prime);
-		chord_template.intervals.insert(Interval::MajorThird);
-		chord_template.intervals.insert(Interval::Fifth);
+		chord_template.intervals.insert(Interval::prime());
+		chord_template.intervals.insert(Interval::major_third());
+		chord_template.intervals.insert(Interval::fifth());
 		chord_template
 	}
 
 	pub fn minor() -> ChordTemplate {
 		let mut chord_template: ChordTemplate = ChordTemplate::new();
-		chord_template.intervals.insert(Interval::Prime);
-		chord_template.intervals.insert(Interval::MinorThird);
-		chord_template.intervals.insert(Interval::Fifth);
+		chord_template.intervals.insert(Interval::prime());
+		chord_template.intervals.insert(Interval::minor_third());
+		chord_template.intervals.insert(Interval::fifth());
 		chord_template
 	}
 }
@@ -72,16 +72,16 @@ mod tests {
 	pub fn major_chords() {
 		let major_chord_template = ChordTemplate::major();
 
-		let major_a_chord = Chord::from_chord_template(&major_chord_template, Key::A);
-		assert!(major_a_chord.keys.contains(&Key::A));
-		assert!(major_a_chord.keys.contains(&Key::Cis));
-		assert!(major_a_chord.keys.contains(&Key::E));
+		let major_a_chord = Chord::from_chord_template(&major_chord_template, Key::a());
+		assert!(major_a_chord.keys.contains(&Key::a()));
+		assert!(major_a_chord.keys.contains(&Key::cis()));
+		assert!(major_a_chord.keys.contains(&Key::e()));
 		assert_eq!(major_a_chord.keys.len(), 3);
 
-		let major_cis_chord = Chord::from_chord_template(&major_chord_template, Key::Cis);
-		assert!(major_cis_chord.keys.contains(&Key::Cis));
-		assert!(major_cis_chord.keys.contains(&Key::F));
-		assert!(major_cis_chord.keys.contains(&Key::Gis));
+		let major_cis_chord = Chord::from_chord_template(&major_chord_template, Key::cis());
+		assert!(major_cis_chord.keys.contains(&Key::cis()));
+		assert!(major_cis_chord.keys.contains(&Key::f()));
+		assert!(major_cis_chord.keys.contains(&Key::gis()));
 		assert_eq!(major_cis_chord.keys.len(), 3);
 	}
 
@@ -89,23 +89,27 @@ mod tests {
 	pub fn minor_chords() {
 		let minor_chord_template = ChordTemplate::minor();
 
-		let minor_a_chord = Chord::from_chord_template(&minor_chord_template, Key::Gis);
-		assert!(minor_a_chord.keys.contains(&Key::Gis));
-		assert!(minor_a_chord.keys.contains(&Key::B));
-		assert!(minor_a_chord.keys.contains(&Key::Dis));
-		assert_eq!(minor_a_chord.keys.len(), 3);
+		let minor_gis_chord = Chord::from_chord_template(&minor_chord_template, Key::gis());
 
-		let minor_cis_chord = Chord::from_chord_template(&minor_chord_template, Key::Cis);
-		assert!(minor_cis_chord.keys.contains(&Key::Cis));
-		assert!(minor_cis_chord.keys.contains(&Key::E));
-		assert!(minor_cis_chord.keys.contains(&Key::Gis));
+		for key in &minor_gis_chord.keys {
+			println!("{}", key.get_value());
+		}
+		assert!(minor_gis_chord.keys.contains(&Key::gis()));
+		assert!(minor_gis_chord.keys.contains(&Key::b()));
+		assert!(minor_gis_chord.keys.contains(&Key::dis()));
+		assert_eq!(minor_gis_chord.keys.len(), 3);
+
+		let minor_cis_chord = Chord::from_chord_template(&minor_chord_template, Key::cis());
+		assert!(minor_cis_chord.keys.contains(&Key::cis()));
+		assert!(minor_cis_chord.keys.contains(&Key::e()));
+		assert!(minor_cis_chord.keys.contains(&Key::gis()));
 		assert_eq!(minor_cis_chord.keys.len(), 3);
 	}
 
 	#[test]
 	pub fn pitch_chord_from_chord_and_pitch_range() {
 		let pitch_range = PitchRange { lower: Pitch { value: 24 }, upper: Pitch { value: 42 }};
-		let chord = Chord::from_chord_template(&ChordTemplate::major(), Key::A);
+		let chord = Chord::from_chord_template(&ChordTemplate::major(), Key::a());
 		let pitch_chord = PitchChord::from_chord_and_pitch_range(chord, pitch_range);
 		let mut asserted_pitches = HashSet::new();
 		asserted_pitches.insert(Pitch { value: 24 });
