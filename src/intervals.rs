@@ -17,6 +17,19 @@ impl Interval {
 	pub fn minor_seventh() -> Interval { Interval { halftones: 10 } }
 	pub fn major_seventh() -> Interval { Interval { halftones: 11 } }
 	pub fn octave() -> Interval { Interval { halftones: 12 } }
+	pub fn minor_ninth() -> Interval { Interval { halftones: 13 } }
+	pub fn major_ninth() -> Interval { Interval { halftones: 14 } }
+	pub fn minor_tenth() -> Interval { Interval { halftones: 15 } }
+	pub fn major_tenth() -> Interval { Interval { halftones: 16 } }
+	pub fn eleventh() -> Interval { Interval { halftones: 17 } }
+	pub fn diminished_twelfth() -> Interval { Interval { halftones: 18 } }
+	pub fn augmented_eleventh() -> Interval { Interval { halftones: 18 } }
+	pub fn twelfth() -> Interval { Interval { halftones: 19 } }
+	pub fn minor_thirteenth() -> Interval { Interval { halftones: 20 } }
+	pub fn major_thirteenth() -> Interval { Interval { halftones: 21 } }
+	pub fn minor_fourteenth() -> Interval { Interval { halftones: 22 } }
+	pub fn major_fourteenth() -> Interval { Interval { halftones: 23 } }
+	pub fn fifteenth() -> Interval { Interval { halftones: 24 } }
 
 	pub fn invert(&mut self) {
 		self.halftones = -self.halftones;
