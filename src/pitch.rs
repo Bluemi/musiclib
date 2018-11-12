@@ -91,6 +91,18 @@ impl fmt::Display for Pitch {
 }
 
 impl PitchRange {
+	pub fn from_pitches(pitch1: Pitch, pitch2: Pitch) -> PitchRange {
+		if pitch1 < pitch2 {
+			PitchRange { lower: pitch1, upper: pitch2 }
+		} else {
+			PitchRange { lower: pitch2, upper: pitch1 }
+		}
+	}
+
+	pub fn from_pitch_and_interval(pitch: Pitch, interval: Interval) -> PitchRange {
+		PitchRange::from_pitches(pitch, pitch + interval)
+	}
+
 	pub fn inner_pitches(self, key: Key) -> Vec<Pitch> {
 		let mut pitch: Pitch = self.lower.get_overlying_pitch(key);
 		let mut pitches: Vec<Pitch> = Vec::new();
