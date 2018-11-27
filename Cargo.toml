@@ -5,3 +5,5 @@ authors = ["Bluemi <bruno.schilling@protonmail.ch>"]
 edition = "2018"
 
 [dependencies]
+num-rational = "0.2.1"
+num-traits = "0.2.6"
