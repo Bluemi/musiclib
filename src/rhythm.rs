@@ -1,41 +1,43 @@
 use std::ops::{Add,Sub,AddAssign};
-use num_rational::Rational32;
+use num_rational::Ratio;
 use std::fmt;
 use std::convert::From;
 
+type Rational = Ratio<u32>;
+
 #[derive(Clone, Copy, PartialEq, PartialOrd)]
 pub struct Duration {
-	duration: Rational32,
+	duration: Rational,
 }
 
 impl Duration {
 	pub fn whole() -> Duration {
-		Duration { duration: Rational32::new(1, 1) }
+		Duration { duration: Rational::new(1, 1) }
 	}
 
 	pub fn half() -> Duration {
-		Duration { duration: Rational32::new(1, 2) }
+		Duration { duration: Rational::new(1, 2) }
 	}
 
 	pub fn quarter() -> Duration {
-		Duration { duration: Rational32::new(1, 4) }
+		Duration { duration: Rational::new(1, 4) }
 	}
 
 	pub fn eighth() -> Duration {
-		Duration { duration: Rational32::new(1, 8) }
+		Duration { duration: Rational::new(1, 8) }
 	}
 
 	pub fn sixteenth() -> Duration {
-		Duration { duration: Rational32::new(1, 16) }
+		Duration { duration: Rational::new(1, 16) }
 	}
 
-	pub fn from_rational(rational: Rational32) -> Duration {
-		Duration { duration: rational }
+	pub fn new(nominator: u32, denominator: u32) -> Duration {
+		Duration { duration: Rational::new(nominator, denominator) }
 	}
 }
 
-impl From<Duration> for Rational32 {
-	fn from(duration: Duration) -> Rational32 {
+impl From<Duration> for Rational {
+	fn from(duration: Duration) -> Rational {
 		duration.duration
 	}
 }
@@ -51,12 +53,12 @@ impl From<BarTimePoint> for Duration {
  */
 #[derive(Clone, Copy, PartialEq, PartialOrd)]
 pub struct BarTimePoint {
-	time_point: Rational32,
+	time_point: Rational,
 }
 
 impl BarTimePoint {
 	pub fn new(nominator: u32, denominator: u32) -> BarTimePoint {
-		BarTimePoint { time_point: Rational32::new(nominator as i32, denominator as i32) }
+		BarTimePoint { time_point: Rational::new(nominator, denominator) }
 	}
 }
 
@@ -84,18 +86,18 @@ impl Sub<Duration> for BarTimePoint {
 
 impl From<BarTimeSignature> for BarTimePoint {
 	fn from(bar_time_signature: BarTimeSignature) -> BarTimePoint {
-		BarTimePoint { time_point: Rational32::new(bar_time_signature.nominator as i32, bar_time_signature.denominator as i32) }
+		BarTimePoint { time_point: Rational::new(bar_time_signature.nominator, bar_time_signature.denominator) }
 	}
 }
 
-impl From<BarTimePoint> for Rational32 {
-	fn from(time_point: BarTimePoint) -> Rational32 {
+impl From<BarTimePoint> for Rational {
+	fn from(time_point: BarTimePoint) -> Rational {
 		time_point.time_point
 	}
 }
 
-impl From<Rational32> for BarTimePoint {
-	fn from(rational: Rational32) -> BarTimePoint {
+impl From<Rational> for BarTimePoint {
+	fn from(rational: Rational) -> BarTimePoint {
 		 BarTimePoint { time_point: rational }
 	}
 }
@@ -196,5 +198,11 @@ mod tests {
 			RhythmNote::new(BarTimePoint::new(3, 4), Duration::quarter()),
 		];
 		assert_eq!(rhythm_pattern1.notes, asserted_pattern1);
+
+		let rhythm_pattern2: RhythmPattern = RhythmPattern::straight_rhythm_notes(BarTimeSignature::new(6, 8), Duration::new(3, 8));
+		let asserted_pattern1: Vec<RhythmNote> = vec![
+			RhythmNote::new(BarTimePoint::new(0, 4), Duration::quarter()),
+			RhythmNote::new(BarTimePoint::new(3, 8), Duration::quarter()),
+		];
 	}
 }
