@@ -91,9 +91,6 @@ mod tests {
 
 		let minor_gis_chord = KeyChord::from_chord_template(&minor_chord_template, Key::gis());
 
-		for key in &minor_gis_chord.keys {
-			println!("{}", key.get_value());
-		}
 		assert!(minor_gis_chord.keys.contains(&Key::gis()));
 		assert!(minor_gis_chord.keys.contains(&Key::b()));
 		assert!(minor_gis_chord.keys.contains(&Key::dis()));

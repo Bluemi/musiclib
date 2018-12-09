@@ -3,6 +3,8 @@ use num_rational::Ratio;
 use std::fmt;
 use std::convert::From;
 
+use crate::math::least_common_multiple;
+
 type Rational = Ratio<u32>;
 
 #[derive(Clone, Copy, PartialEq, PartialOrd)]
@@ -59,6 +61,29 @@ pub struct BarTimePoint {
 impl BarTimePoint {
 	pub fn new(nominator: u32, denominator: u32) -> BarTimePoint {
 		BarTimePoint { time_point: Rational::new(nominator, denominator) }
+	}
+
+	pub fn get_nominator(self) -> u32 {
+		return *self.time_point.numer();
+	}
+
+	pub fn get_denominator(self) -> u32 {
+		return *self.time_point.denom();
+	}
+
+	/*
+	 * The microtiming is the number of possible time points inside a bar.
+	 * This function returns the value which is at least needed to represent the given
+	 * BarTimePoints
+	 */
+	pub fn get_micro_timing(time_points: &Vec<BarTimePoint>) -> i32 {
+		let mut timing = 1;
+		for time_point in time_points {
+			if time_point.get_denominator() != 0 {
+				timing = least_common_multiple(timing, time_point.get_denominator() as i32);
+			}
+		}
+		timing
 	}
 }
 
@@ -200,9 +225,15 @@ mod tests {
 		assert_eq!(rhythm_pattern1.notes, asserted_pattern1);
 
 		let rhythm_pattern2: RhythmPattern = RhythmPattern::straight_rhythm_notes(BarTimeSignature::new(6, 8), Duration::new(3, 8));
-		let asserted_pattern1: Vec<RhythmNote> = vec![
-			RhythmNote::new(BarTimePoint::new(0, 4), Duration::quarter()),
-			RhythmNote::new(BarTimePoint::new(3, 8), Duration::quarter()),
+		let asserted_pattern2: Vec<RhythmNote> = vec![
+			RhythmNote::new(BarTimePoint::new(0, 4), Duration::new(3, 8)),
+			RhythmNote::new(BarTimePoint::new(3, 8), Duration::new(3, 8)),
 		];
+		assert_eq!(rhythm_pattern2.notes, asserted_pattern2);
+	}
+
+	#[test]
+	pub fn test_micro_timing() {
+		assert_eq!(BarTimePoint::get_micro_timing(&vec!(BarTimePoint::new(0, 4), BarTimePoint::new(1, 4), BarTimePoint::new(2, 4), BarTimePoint::new(3, 4))), 4);
 	}
 }

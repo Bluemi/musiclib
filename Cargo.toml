@@ -7,3 +7,6 @@ edition = "2018"
 [dependencies]
 num-rational = "0.2.1"
 num-traits = "0.2.6"
+
+[dependencies.rimd]
+git = "https://github.com/nicklan/rimd.git"
