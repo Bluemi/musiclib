@@ -5,6 +5,6 @@ pub mod chords;
 pub mod intervals;
 pub mod pitch;
 pub mod rhythm;
-// pub mod writer;
+pub mod writer;
 pub mod note;
 mod math;

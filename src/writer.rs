@@ -1,24 +1,32 @@
 extern crate rimd;
 
-use std::path::Path;
-use rimd::{SMFBuilder, SMFWriter, MidiMessage, MetaEvent};
+// use std::path::Path;
+// use rimd::{SMFBuilder, SMFWriter, MidiMessage, MetaEvent};
 
+use crate::rhythm::RhythmNote;
 use crate::note::Note;
 
 pub struct MidiWriter {
-	sfm_builder: SFMBuilder,
+    notes: Vec<Note>,
 }
 
 impl MidiWriter {
 	pub fn new() -> MidiWriter {
-		let mut sfm_builder = SFMBuilder::new();
-		sfm_builder.add_track();
-		MidiWriter { sfm_builder }
+        MidiWriter { notes: Vec::new() }
 	}
 
-	pub fn write_bar(&mut self, notes: &Vec<Note>) {
-		for note in notes {
-			self.sfm_builder.add_midi_abs(0, 
-		}
+	pub fn add_notes<'a, I>(&mut self, notes: I)
+    where
+        I: Iterator<Item = &'a Note>
+    {
+        self.notes.extend(notes);
 	}
+
+    pub fn write(&self) {
+        // notes -> micro_timing
+        let rhythm_notes: Vec<RhythmNote> = self.notes.iter().map(|note| { note.get_rhythm_note() }).collect();
+        let micro_timing = RhythmNote::to_micro_timing(rhythm_notes.iter());
+
+        // express notes as micro_timing
+    }
 }

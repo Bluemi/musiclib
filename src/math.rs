@@ -14,6 +14,7 @@ pub fn least_common_multiple(value1: i32, value2: i32) -> i32 {
 	return (value1.abs() / greatest_common_divisor(value1, value2)) * value2.abs();
 }
 
+#[allow(dead_code)]
 pub fn least_common_multiple_of_vec(vec: &Vec<i32>) -> Result<i32, &str> {
 	if vec.len() < 2 {
 		return Err("vec should at least contain 2 values");
