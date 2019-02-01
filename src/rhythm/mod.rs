@@ -1,3 +1,5 @@
+mod generator;
+
 use std::ops::{Add,Sub,AddAssign};
 use num_rational::Ratio;
 use std::fmt;
