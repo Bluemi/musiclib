@@ -182,21 +182,21 @@ impl RhythmNote {
 		}
 	}
 
-    pub fn get_time_points(self) -> (TimePoint, TimePoint) {
-        (self.time_point, self.time_point + self.duration)
-    }
+	pub fn get_time_points(self) -> (TimePoint, TimePoint) {
+		(self.time_point, self.time_point + self.duration)
+	}
 
-    pub fn to_micro_timing<'a, I>(rhythm_notes: I) -> i32
-    where
-        I: Iterator<Item = &'a RhythmNote>
-    {
-        let mut time_points: Vec<TimePoint> = Vec::with_capacity(rhythm_notes.size_hint().0*2);
-        for time_point_tuple in rhythm_notes.map(|note| { note.get_time_points() }) {
-            time_points.push(time_point_tuple.0);
-            time_points.push(time_point_tuple.1);
-        }
-        TimePoint::get_micro_timing(time_points.iter())
-    }
+	pub fn to_micro_timing<'a, I>(rhythm_notes: I) -> i32
+	where
+		I: Iterator<Item = &'a RhythmNote>
+	{
+		let mut time_points: Vec<TimePoint> = Vec::with_capacity(rhythm_notes.size_hint().0*2);
+		for time_point_tuple in rhythm_notes.map(|note| { note.get_time_points() }) {
+			time_points.push(time_point_tuple.0);
+			time_points.push(time_point_tuple.1);
+		}
+		TimePoint::get_micro_timing(time_points.iter())
+	}
 }
 
 impl fmt::Debug for RhythmNote {
@@ -257,6 +257,6 @@ mod tests {
 	pub fn test_micro_timing() {
 		let time_points = vec!(TimePoint::new(0, 4), TimePoint::new(1, 4), TimePoint::new(2, 4), TimePoint::new(3, 4));
 		assert_eq!(TimePoint::get_micro_timing(time_points.iter()), 4);
-        println!("{}", time_points[0].get_denominator());
+		println!("{}", time_points[0].get_denominator());
 	}
 }

@@ -9,7 +9,7 @@ pub struct Note {
 }
 
 impl Note {
-    pub fn get_rhythm_note(&self) -> RhythmNote {
-        RhythmNote::new(self.time_point, self.duration)
-    }
+	pub fn get_rhythm_note(&self) -> RhythmNote {
+		RhythmNote::new(self.time_point, self.duration)
+	}
 }
