@@ -1,6 +1,6 @@
 use super::{Duration, TimePoint, RhythmNote};
 
-struct StraitRhythmNotes {
+pub struct StraitRhythmNotes {
 	time_point: TimePoint,
 	duration: Duration,
 }
@@ -17,7 +17,7 @@ impl Iterator for StraitRhythmNotes {
 	fn next(&mut self) -> Option<Self::Item> {
 		let cur = self.time_point;
 		self.time_point += self.duration;
-		Some(RhythmNote { time_point: cur, duration: self.duration })
+		Some(RhythmNote::new(cur, self.duration))
 	}
 }
 
