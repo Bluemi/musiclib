@@ -1,4 +1,4 @@
-mod generator;
+pub mod generator;
 
 use std::ops::{Add,Sub,AddAssign};
 use num_rational::Ratio;
