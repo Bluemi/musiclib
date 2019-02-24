@@ -1,3 +1,4 @@
 #!/bin/bash
 
-$(cvlc test.mid 2>/dev/null 1>/dev/null)
+audacious -H -q "test.mid" 2>/dev/null 1>/dev/null
+rm core.*

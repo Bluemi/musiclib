@@ -57,8 +57,8 @@ impl PitchChord {
 	pub fn from_chord_and_pitch_range(chord: KeyChord, pitch_range: PitchRange) -> PitchChord {
 		let mut pitches = Vec::new();
 		for key in chord.keys {
-			let mut vec = pitch_range.inner_pitches(key);
-			pitches.append(&mut vec);
+			let vec = pitch_range.inner_pitches(key);
+			pitches.extend(&vec);
 		}
 		PitchChord { pitches: pitches.iter().cloned().collect() }
 	}
