@@ -70,42 +70,42 @@ mod tests {
 
 	#[test]
 	pub fn test_writing() {
-		let mut notes: Vec<Note> = Vec::new();
-
 		let duration = Duration::quarter();
 
 		// Alle meine Entchen
-		notes.push(Note { time_point: TimePoint::new(0, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::c(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(1, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::d(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(2, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::e(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(3, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::f(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(4, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(6, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) } );
+		let notes = [
+			Note { time_point: TimePoint::new(0, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::c(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(1, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::d(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(2, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::e(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(3, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::f(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(4, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(6, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) },
 
-		notes.push(Note { time_point: TimePoint::new(8, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) } );
-		notes.push(Note { time_point: TimePoint::new(9, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) } );
-		notes.push(Note { time_point: TimePoint::new(10, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) } );
-		notes.push(Note { time_point: TimePoint::new(11, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) } );
-		notes.push(Note { time_point: TimePoint::new(12, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) } );
+			Note { time_point: TimePoint::new(8, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) },
+			Note { time_point: TimePoint::new(9, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) },
+			Note { time_point: TimePoint::new(10, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) },
+			Note { time_point: TimePoint::new(11, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) },
+			Note { time_point: TimePoint::new(12, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) },
 
-		notes.push(Note { time_point: TimePoint::new(16, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) } );
-		notes.push(Note { time_point: TimePoint::new(17, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) } );
-		notes.push(Note { time_point: TimePoint::new(18, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) } );
-		notes.push(Note { time_point: TimePoint::new(19, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) } );
-		notes.push(Note { time_point: TimePoint::new(20, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) } );
+			Note { time_point: TimePoint::new(16, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) },
+			Note { time_point: TimePoint::new(17, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) },
+			Note { time_point: TimePoint::new(18, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) },
+			Note { time_point: TimePoint::new(19, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::a(), Octave { value: 4 }) },
+			Note { time_point: TimePoint::new(20, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) },
 
-		notes.push(Note { time_point: TimePoint::new(24, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::f(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(25, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::f(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(26, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::f(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(27, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::f(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(28, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::e(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(30, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::e(), Octave { value: 3 }) } );
+			Note { time_point: TimePoint::new(24, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::f(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(25, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::f(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(26, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::f(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(27, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::f(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(28, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::e(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(30, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::e(), Octave { value: 3 }) },
 
-		notes.push(Note { time_point: TimePoint::new(32, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(33, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(34, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(35, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) } );
-		notes.push(Note { time_point: TimePoint::new(36, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::c(), Octave { value: 3 }) } );
+			Note { time_point: TimePoint::new(32, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(33, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(34, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(35, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::g(), Octave { value: 3 }) },
+			Note { time_point: TimePoint::new(36, 4), duration: duration, pitch: Pitch::from_key_and_octave(Key::c(), Octave { value: 3 }) }
+		];
 
 		let mut midi_writer = MidiWriter::new();
 		midi_writer.add_notes(notes.iter());

@@ -1,4 +1,6 @@
 #!/bin/bash
 
-audacious -H -q "test.mid" 2>/dev/null 1>/dev/null
-rm core.*
+x=$(mktemp -d)
+ffmpeg -i "test.mid" "${x}/test.wav" 1>/dev/null 2>/dev/null
+paplay "${x}/test.wav"
+rm -r "${x}"
