@@ -1,6 +1,3 @@
 #!/bin/bash
 
-x=$(mktemp -d)
-ffmpeg -i "test.mid" "${x}/test.wav" 1>/dev/null 2>/dev/null
-paplay "${x}/test.wav"
-rm -r "${x}"
+fluidsynth -a alsa -m alsa_seq -l -i /usr/share/soundfonts/FluidR3_GM.sf2 test.mid
