@@ -1,3 +1,5 @@
+pub mod generate;
+
 use std::collections::HashSet;
 
 use crate::keys::Key;
